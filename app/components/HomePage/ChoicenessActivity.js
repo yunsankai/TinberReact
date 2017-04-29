@@ -15,10 +15,9 @@ import {
 import React, {
   Component,
 } from 'react'
-// import teamMap from '../../utils/team-map'
 
 
-export default class HomeActivity extends Component {
+export default class ChoicenessActivity extends Component {
   constructor (props) {
     super(props)
     // const {game, date} = props.route
@@ -40,11 +39,8 @@ export default class HomeActivity extends Component {
     const {actions} = props
     
   }
-/*
-<Text style={{paddingTop:100}}>
-            首个页面就是这个东西
-          </Text>
-*/
+
+
   render () {
     console.log("创建一次了，哈哈");
     return(

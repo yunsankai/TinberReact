@@ -22,7 +22,8 @@ import teamActions from './actions/team'
 import HomeNavigationBar from './components/HomePage/HomeNavigationBar'
 import Swiper from 'react-native-swiper';
 import HomeActivity from './components/HomePage/HomeActivity'
-import 
+import {MACROS} from './constant'
+import ChoicenessActivity from './components/HomePage/ChoicenessActivity'
 
 // import Game from './Game'
 // import Player from './Player'
@@ -79,8 +80,8 @@ class App extends Component{
         <View>
           <HomeNavigationBar />
           <Swiper style={styles.wrapper} showsButtons={false}>
-            <HomeActivity style={styles.slide1}>
-            </HomeActivity>
+            <ChoicenessActivity style={styles.slide1}>
+            </ChoicenessActivity>
             <HomeActivity style={styles.slide2}>
             </HomeActivity>
             <HomeActivity style={styles.slide3}>
@@ -90,14 +91,14 @@ class App extends Component{
       )
     }
 }
-var screenHight = 
+// var screenHight = 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1
   },
   wrapper:{
-    
+    hegiht:MACROS.ScreenWidth,
   },
   slide1: {
     flex: 1,
