@@ -6,7 +6,7 @@ import {APP} from '../constant'
 
 /* First navigatore of each tab named [tab]Index */
 const initialState = {
-  tab: 'game',
+  tab: 1,
   navigator: 'gameIndex'
 }
 

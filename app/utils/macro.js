@@ -11,7 +11,7 @@ import {
 
 
 export const MACROS = {
-	ScreenWidth:ScreenWidth,
-	ScreenHeight:ScreenHeight,
-	ScreenScale:ScreenScale
+	ScreenWidth:{ScreenWidth},
+	ScreenHeight:{ScreenHeight},
+	ScreenScale:{ScreenScale}
 }

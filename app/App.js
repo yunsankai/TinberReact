@@ -6,7 +6,9 @@ import {
   StyleSheet,
   PropTypes,
   PixelRatio,
+  Navigator,
 } from 'react-native' 
+
 import React, {
   Component,
 } from 'react'
@@ -15,74 +17,62 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import applicationActions from './actions/application'
-import gameActions from './actions/game'
-import playerActions from './actions/player'
-import teamActions from './actions/team'
 
 import HomeNavigationBar from './components/HomePage/HomeNavigationBar'
 import Swiper from 'react-native-swiper';
 import HomeActivity from './components/HomePage/HomeActivity'
 import {MACROS} from './constant'
 import ChoicenessActivity from './components/HomePage/ChoicenessActivity'
+import SearchActivity from './components/HomePage/SearchActivity'
 
-// import Game from './Game'
-// import Player from './Player'
-// import Team from './Team'
+class MainActivity extends Component{
 
-// export default class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      selectNavigationItemIndex: 0,
+    }
 
-//   constructor (props) {
-//     super(props)
-//     this.state = {
-//       tab: null
-//     }
-//   }
+  }
+  _onMomentumScrollEnd(){
+    applicationActions.changeTab(self.swiper.index)
+  }
 
-//   componentWillReceiveProps (props) {
-//     const {application} = props
-//     this.setState({
-//       tab: application.tab
-//     })
-//   }
+  _onNavigationSelectItemChange(selectItemIndex){
+    
+    switch (selectItemIndex) {
+      case 0:
+        var searchActivity = new SearchActivity;
+        this.props.navigator.push(searchActivity);
+       break;
+      default:
+        if (this.swiper && this.swiper.index != selectItemIndex){
+         this.swiper.scrollBy(selectItemIndex,true);
+         applicationActions.changeTab(self.swiper.index);
+        }
+      break;
+    }
+  }
 
-//   render () {
-//     const {tab} = this.state
-//     const {game, player, team, gameActions, playerActions, teamActions} = this.props
-
-//     return (
-//       <View style={styles.container}>
-//         {tab === 'game' &&
-//           <Game {...game} actions={gameActions} />
-//         }
-//         {tab === 'players' &&
-//           <Player {...player} actions={playerActions} />
-//         }
-//         {tab === 'teams' &&
-//           <Team {...team} actions={teamActions} />
-//         }
-//       </View>
-//     )
-//   }
-// }
-
-// App.propTypes = {
-//   game: PropTypes.object,
-//   player: PropTypes.object,
-//   team: PropTypes.object,
-//   gameActions: PropTypes.object,
-//   playerActions: PropTypes.object,
-//   teamActions: PropTypes.object
-// }
-
-class App extends Component{
-    render(){
+  render(){
       return(
         <View>
-          <HomeNavigationBar />
-          <Swiper style={styles.wrapper} showsButtons={false}>
+          <HomeNavigationBar 
+          selectItemFunc={(selectItemIndex)=>this._onNavigationSelectItemChange(selectItemIndex)}/>
+
+          <Swiper style={styles.wrapper}
+                  ref={(c)=>this.swiper = c} 
+                  showsButtons={false}
+                  onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
+                  loop={false}
+                  bounces={true}>
             <ChoicenessActivity style={styles.slide1}>
             </ChoicenessActivity>
             <HomeActivity style={styles.slide2}>
+            </HomeActivity>
+            <HomeActivity style={styles.slide3}>
+            </HomeActivity>
+            <HomeActivity style={styles.slide3}>
             </HomeActivity>
             <HomeActivity style={styles.slide3}>
             </HomeActivity>
@@ -91,14 +81,41 @@ class App extends Component{
       )
     }
 }
-// var screenHight = 
+
+
+
+class App extends Component{
+  renderScene (route, navigator) {
+    if (route.component) {
+      const Component = route.component
+      return <Component navigator={navigator} route={route} {...this.props} />
+
+     }
+  }
+  render () {
+    return (
+      <Navigator
+        initialRoute={{
+          name: 'MainActivity',
+          component: MainActivity
+        }}
+        // navigationBar={<NavigatorBar />}
+        configureScene={() => ({
+          ...Navigator.SceneConfigs.FloatFromRight
+        })}
+        renderScene={this.renderScene.bind(this)}
+      />
+    )
+  }
+    
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1
   },
   wrapper:{
-    hegiht:MACROS.ScreenWidth,
+    // hegiht:MACROS.ScreenWidth,
   },
   slide1: {
     flex: 1,
@@ -129,27 +146,13 @@ const styles = StyleSheet.create({
 
 export default connect(state => {
   return {
-    application: state.application,
-    game: {
-      live: state.live,
-      over: state.over,
-      unstart: state.unstart,
-      standing: state.standing,
-      application: state.application
-    },
-    player: {
-      playerList: state.playerList,
-      playerLoaded: state.playerLoaded
-    },
-    team: {
-      team: state.team,
-      playerLoaded: state.playerLoaded
-    }
+    application: state.application
   }
 }, dispatch => {
   return {
-    gameActions: bindActionCreators(Object.assign({}, applicationActions, gameActions), dispatch),
-    playerActions: bindActionCreators(Object.assign({}, applicationActions, playerActions), dispatch),
-    teamActions: bindActionCreators(Object.assign({}, applicationActions, playerActions, teamActions), dispatch)
+    applicationActions: bindActionCreators(Object.assign({}, applicationActions), dispatch)
   }
 })(App)
+
+
+

@@ -1,6 +1,7 @@
  'use strict'
 
 import {
+  View,
   StatusBar,
   Platform,
   Text,
@@ -28,7 +29,7 @@ export default class Root extends Component {
     //   StatusBar.setHidden(true)
     // }
   }
-
+  
   render () {
     return (
       <Provider store={store}>

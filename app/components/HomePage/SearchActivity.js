@@ -16,14 +16,18 @@ import React, {
   Component,
 } from 'react'
 
-export default class HomeActivity extends Component {
+
+export default class SearchActivity extends Component {
   constructor (props) {
     super(props)
+    // const {game, date} = props.route
     
     this.state = {
       selectedIndex: 0,
     }
-
+    // this.date = date
+    // this.gameId = game.id
+    // this.timeout = null
   }
 
   componentDidMount () {
@@ -36,13 +40,14 @@ export default class HomeActivity extends Component {
     
   }
 
+
   render () {
     console.log("创建一次了，哈哈");
     return(
-        <View style={{backgroundColor:this.props.style.backgroundColor,height:'100%'}}>
+        <View style={{backgroundColor:'#8fe8a8',height:'100%'}}>
           
-          <Text style={{paddingTop:100}}>
-            这是后面的页.
+          <Text style={{paddingTop:100,color:'#ea453b',fontSize:29,backgroundColor:'#888888'}}>
+            这他妈是搜索
           </Text>
         </View>
     )
