@@ -18,6 +18,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 
 import applicationActions from './actions/application'
+import ChoicenessActions from './actions/ChoicenessActions'
 
 import HomeNavigationBar from './components/HomePage/HomeNavigationBar'
 import Swiper from 'react-native-swiper';
@@ -85,7 +86,7 @@ class MainActivity extends Component{
                   onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
                   loop={false}
                   bounces={true}>
-            <ChoicenessActivity style={styles.slide1}>
+            <ChoicenessActivity style={styles.slide1}  {...this.props}>
             </ChoicenessActivity>
             <HomeActivity style={styles.slide2}>
             </HomeActivity>
@@ -165,12 +166,13 @@ const styles = StyleSheet.create({
 
 export default connect(state => {
   return {
-    application: state.application
-
+    application: state.application,
+    choicenessPageInfo: state.choicenessPageInfo
   }
 }, dispatch => {
   return {
-    applicationActions: bindActionCreators(Object.assign({}, applicationActions), dispatch)
+    applicationActions: bindActionCreators(Object.assign({}, applicationActions), dispatch),
+    ChoicenessActions: bindActionCreators(Object.assign({},ChoicenessActions),dispatch)
   }
 })(App)
 

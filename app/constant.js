@@ -9,6 +9,11 @@ export const APP = {
 }
 // Enum('TAB', 'NAVIGATION')
 
+export const CHOICENESS = {
+  INFO: 'CHOICENESS.INFO',
+  
+}
+
 export const GAME = {
   INFO: 'GAME.INFO',
   DETAIL: 'GAME.DETAIL',

@@ -10,6 +10,7 @@ import application from './application'
 import playerList from './playerList'
 import playerLoaded from './playerLoaded'
 import team from './team'
+import choicenessPageInfo from './ChoicenessReducers'
 
 const reducers = combineReducers({
   unstart,
@@ -19,7 +20,8 @@ const reducers = combineReducers({
   application,
   playerList,
   playerLoaded,
-  team
+  team,
+  choicenessPageInfo
 })
 
 export default reducers

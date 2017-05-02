@@ -8,7 +8,7 @@ const address = {
    * 获取首页所有数据
    */
   firstPageGeneral: () => {
-    return newBaseUrl + `"first-page/get-first-page"`
+    return newBaseUrl + `first-page/get-first-page`
   },
   /**
    * All game of the date
