@@ -7,6 +7,7 @@ import {
   PropTypes,
   PixelRatio,
   Navigator,
+  InteractionManager,
 } from 'react-native' 
 
 import React, {
@@ -29,26 +30,43 @@ class MainActivity extends Component{
 
   constructor (props) {
     super(props)
-    this.state = {
-      selectNavigationItemIndex: 0,
-    }
+    // this.state = {
+    //   tab: 1,
+    // }
 
   }
-  _onMomentumScrollEnd(){
-    applicationActions.changeTab(self.swiper.index)
+  // componentWillReceiveProps (props) {
+  //   const {application} = props
+  //   this.setState({
+  //     tab: application.tab
+  //   })
+  // }
+
+  _onMomentumScrollEnd(e, state, context){
+    const {applicationActions} = this.props;
+    applicationActions.changeTab(state.index+1)
   }
 
   _onNavigationSelectItemChange(selectItemIndex){
     
     switch (selectItemIndex) {
       case 0:
-        var searchActivity = new SearchActivity;
-        this.props.navigator.push(searchActivity);
+      InteractionManager.runAfterInteractions(() => {
+        // ...耗时较长的同步的任务...
+        this.props.navigator.push({
+          name: 'SearchActivity',
+          component: SearchActivity
+        });
+      });
+        
        break;
       default:
-        if (this.swiper && this.swiper.index != selectItemIndex){
-         this.swiper.scrollBy(selectItemIndex,true);
-         applicationActions.changeTab(self.swiper.index);
+        const {applicationActions,application} = this.props;
+        if (application.tab != selectItemIndex){
+         //计算偏移量，
+         var toIndex = selectItemIndex-application.tab;
+         this.swiper.scrollBy(toIndex,true);
+         applicationActions.changeTab(application.tab)
         }
       break;
     }
@@ -58,7 +76,8 @@ class MainActivity extends Component{
       return(
         <View>
           <HomeNavigationBar 
-          selectItemFunc={(selectItemIndex)=>this._onNavigationSelectItemChange(selectItemIndex)}/>
+          selectItemFunc={(selectItemIndex)=>this._onNavigationSelectItemChange(selectItemIndex)}
+          {...this.props}/>
 
           <Swiper style={styles.wrapper}
                   ref={(c)=>this.swiper = c} 
@@ -101,7 +120,7 @@ class App extends Component{
         }}
         // navigationBar={<NavigatorBar />}
         configureScene={() => ({
-          ...Navigator.SceneConfigs.FloatFromRight
+          ...Navigator.SceneConfigs.PushFromRight
         })}
         renderScene={this.renderScene.bind(this)}
       />
@@ -147,6 +166,7 @@ const styles = StyleSheet.create({
 export default connect(state => {
   return {
     application: state.application
+
   }
 }, dispatch => {
   return {

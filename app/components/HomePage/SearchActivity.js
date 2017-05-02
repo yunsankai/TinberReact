@@ -41,20 +41,37 @@ export default class SearchActivity extends Component {
   }
 
 
-  render () {
-    console.log("创建一次了，哈哈");
-    return(
-        <View style={{backgroundColor:'#8fe8a8',height:'100%'}}>
-          
-          <Text style={{paddingTop:100,color:'#ea453b',fontSize:29,backgroundColor:'#888888'}}>
-            这他妈是搜索
-          </Text>
-        </View>
+  goBack() {
+    this.props.navigator.pop()
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={{color:'#ea453b'}}>Hello from Home</Text>
+        <TouchableHighlight onPress={ () => this.goBack() } style={ styles.button }>
+            <Text>GO TO ABOUT</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={ () => this.navigate('Login', 'This is the login page!') } style={ styles.button }>
+            <Text>GO TO Login</Text>
+        </TouchableHighlight>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor:'white',
+  },
+  button: {
+    height: 50,
+    width:100,
+    backgroundColor: '#ededed',
+    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   // Navigation
   nav: {
     height: 40,

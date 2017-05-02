@@ -19,10 +19,10 @@ export default class HomeNavigationBar extends Component{
   constructor (props) {
     super(props)
 
-    this.state = {
-      selectedIndex: 0,
+    // this.state = {
+    //   selectedIndex: 1,
 
-    }
+    // }
 
   }
 
@@ -35,27 +35,33 @@ export default class HomeNavigationBar extends Component{
   //接收state变动后的变化
   // componentWillReceiveProps (props) {
   //   const {application} = props
-
+  //   var selectedIndex = application.tab;
+  //   if (selectedIndex != this.state.selectedIndex) {
+  //     this.setState({
+  //       selectedIndex:selectedIndex
+  //     })
+  //   }
   // }
 
 
   render(){
     const titlesArray = ["🔍","精选","电台","主播","分类","我的"];
     // const {selectItemFunc} = this.props;
-    const {application} = this.props;
+    // var selectedIndex = this.state.selectedIndex;
+    const {application} = this.props
 
     const titleViews = titlesArray.map(function (title, key) {
       // body...
       return(
         <Text 
-          style={styles.titles,{color:(application.tab===key)?'#000000':'#ffffff'}}
+          style={styles.titles,{color:(application.tab===key)?'#000000':'#ffffff', flex:1}}
           key={key} 
           onPress={()=>this._onPressText(key)}
           >
           {title}
         </Text>
       )
-    })
+    }.bind(this))
     return(
       <View style={styles.baseNav}>
         {
