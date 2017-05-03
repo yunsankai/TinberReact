@@ -65,7 +65,7 @@ export default class ChoicenessActivity extends Component {
         <View>
           <ScrollView>
             
-            
+            {/*banner*/}
             <Swiper ref={(c)=>this.swiper = c} 
                     showsButtons={false}
                     loop={true}
@@ -73,6 +73,8 @@ export default class ChoicenessActivity extends Component {
                     height={140*screenScale}>
               {swipImageViews}
             </Swiper>
+            
+            {/*banner*/}
             
 
             <Text style={{paddingTop:100}}>

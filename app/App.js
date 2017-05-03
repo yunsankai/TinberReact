@@ -76,10 +76,11 @@ class MainActivity extends Component{
   render(){
       return(
         <View>
+      {/*//底部播放条*/}
           <HomeNavigationBar 
           selectItemFunc={(selectItemIndex)=>this._onNavigationSelectItemChange(selectItemIndex)}
           {...this.props}/>
-
+      {/* activities */}
           <Swiper style={styles.wrapper}
                   ref={(c)=>this.swiper = c} 
                   showsButtons={false}
@@ -97,6 +98,11 @@ class MainActivity extends Component{
             <HomeActivity style={styles.slide3}>
             </HomeActivity>
           </Swiper>
+
+      {/*//底部播放条*/}
+          <View>
+
+          </View>
         </View>
       )
     }
