@@ -63,7 +63,7 @@ export default class ChoicenessActivity extends Component {
     });
     return(
         <View>
-          <ScrollView>
+          <ScrollView >
             
             {/*banner*/}
             <Swiper ref={(c)=>this.swiper = c} 
@@ -77,8 +77,8 @@ export default class ChoicenessActivity extends Component {
             {/*banner*/}
             
 
-            <Text style={{paddingTop:100}}>
-              {JSON.stringify(choicenessPageInfo.data)}
+            <Text style={{paddingTop:100,color:'#ea453b',fontSize:17}}>
+              {JSON.stringify(choicenessPageInfo.data.data.banner)}
             </Text>
 
           </ScrollView>

@@ -8,6 +8,7 @@ import {
   PixelRatio,
   Navigator,
   InteractionManager,
+  Dimensions,
 } from 'react-native' 
 
 import React, {
@@ -23,9 +24,11 @@ import ChoicenessActions from './actions/ChoicenessActions'
 import HomeNavigationBar from './components/HomePage/HomeNavigationBar'
 import Swiper from 'react-native-swiper';
 import HomeActivity from './components/HomePage/HomeActivity'
-import {MACROS} from './constant'
 import ChoicenessActivity from './components/HomePage/ChoicenessActivity'
 import SearchActivity from './components/HomePage/SearchActivity'
+ const ScreenWidth = Dimensions.get('window').width;
+ const ScreenHeight = Dimensions.get('window').height;
+ const ScreenScale = Dimensions.get('window').scale;
 
 class MainActivity extends Component{
 
@@ -98,11 +101,6 @@ class MainActivity extends Component{
             <HomeActivity style={styles.slide3}>
             </HomeActivity>
           </Swiper>
-
-      {/*//底部播放条*/}
-          <View>
-
-          </View>
         </View>
       )
     }
@@ -114,23 +112,32 @@ class App extends Component{
   renderScene (route, navigator) {
     if (route.component) {
       const Component = route.component
-      return <Component navigator={navigator} route={route} {...this.props} />
-
+      return  <Component navigator={navigator} route={route} {...this.props} />
      }
   }
+  /*
+  //底部播放条
+        <View style={{position:'absolute',top:150-50,
+        width:200,height:50,backgroundColor:'#ea453b',zIndex:9999}}>
+          <Text>
+            这个是播放器
+          </Text>
+        </View>
+  */
   render () {
     return (
-      <Navigator
-        initialRoute={{
-          name: 'MainActivity',
-          component: MainActivity
-        }}
-        // navigationBar={<NavigatorBar />}
-        configureScene={() => ({
-          ...Navigator.SceneConfigs.PushFromRight
-        })}
-        renderScene={this.renderScene.bind(this)}
-      />
+        <Navigator
+          initialRoute={{
+            name: 'MainActivity',
+            component: MainActivity
+          }}
+          // navigationBar={<NavigatorBar />}
+          configureScene={() => ({
+            ...Navigator.SceneConfigs.PushFromRight
+          })}
+          renderScene={this.renderScene.bind(this)}
+        >
+        </Navigator>
     )
   }
     
