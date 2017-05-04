@@ -9,6 +9,9 @@ import {
   Navigator,
   InteractionManager,
   Dimensions,
+  TouchableHighlight,
+  StatusBar,
+  Platform
 } from 'react-native' 
 
 import React, {
@@ -26,9 +29,9 @@ import Swiper from 'react-native-swiper';
 import HomeActivity from './components/HomePage/HomeActivity'
 import ChoicenessActivity from './components/HomePage/ChoicenessActivity'
 import SearchActivity from './components/HomePage/SearchActivity'
- const ScreenWidth = Dimensions.get('window').width;
- const ScreenHeight = Dimensions.get('window').height;
- const ScreenScale = Dimensions.get('window').scale;
+import macro from './utils/macro'
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+
 
 class MainActivity extends Component{
 
@@ -108,22 +111,31 @@ class MainActivity extends Component{
 
 
 
+
 class App extends Component{
+
+
+
   renderScene (route, navigator) {
     if (route.component) {
-      const Component = route.component
-      return  <Component navigator={navigator} route={route} {...this.props} />
+      const Component = route.component;
+      const statusBarH = StatusBar.currentHeight;
+      if (Platform.OS === 'ios') {statusBarH=0};
+      return  (
+        <View>
+          <Component navigator={navigator} route={route} 
+          style={{width:macro.getScreenWidth(),height:macro.getScreenHeight()}}{...this.props} />
+          <View style={{position:'absolute',top:macro.getScreenHeight()-50-statusBarH,
+            width:macro.getScreenWidth(),height:50,backgroundColor:'#ea453b',zIndex:9999}}>
+            <Text>
+              这个是底部播放条。
+            </Text>
+          </View>
+        </View>
+      )
      }
   }
-  /*
-  //底部播放条
-        <View style={{position:'absolute',top:150-50,
-        width:200,height:50,backgroundColor:'#ea453b',zIndex:9999}}>
-          <Text>
-            这个是播放器
-          </Text>
-        </View>
-  */
+  
   render () {
     return (
         <Navigator
@@ -140,6 +152,35 @@ class App extends Component{
         </Navigator>
     )
   }
+//   render() {
+//     const routes = [
+//       {title: 'First Scene', index: 0},
+//       {title: 'Second Scene', index: 1},
+//     ];
+//     return (
+//       <Navigator
+//         initialRoute={routes[0]}
+        
+//         renderScene={(route, navigator) =>
+//           <View>
+//             <TouchableHighlight style={{width:macro.getScreenWidth(),height:macro.getScreenWidth(),backgroundColor:'#ea453b'}}
+//                  onPress={() => {
+//                   if (route.index === 0) {
+//                     navigator.push(routes[1]);
+//                   } else {
+//                     navigator.pop();
+//                   }
+//                  }}>
+//               <Text>Hello {route.title}!</Text>
+//             </TouchableHighlight>
+
+//           </View>
+//         }
+//         style={{padding: 100}}
+//       />
+//     );
+// }
+
     
 }
 
@@ -155,6 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#9DD6EB',
+
   },
   slide2: {
     flex: 1,

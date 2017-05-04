@@ -57,25 +57,29 @@ export default class ChoicenessActivity extends Component {
     const screenScale = ScreenWidth/320;
     this.currentChoicenessPageInfo = choicenessPageInfo;
     const swipImageViews = data.banner.map(function (value, index) {
-      // body...
-        return <Image key={index} source={{uri:value.image_url}} 
-        style={{width:ScreenWidth, height:140*screenScale}}/>
+      // body...value.image_url
+        return (  <Image source={require('../../img/word_peace.jpg')} 
+            style={{width:ScreenWidth, height:140*screenScale,flex:1}}/>
+        )
     });
     return(
         <View>
-          <ScrollView >
+          <ScrollView>
             
             {/*banner*/}
             <Swiper ref={(c)=>this.swiper = c} 
-                    showsButtons={false}
-                    loop={true}
-                    width={ScreenWidth}
-                    height={140*screenScale}>
+                  showsButtons={false}
+                  loop={true}
+                  width={ScreenWidth}
+                  height={140*screenScale}
+                  removeClippedSubviews={false}>
               {swipImageViews}
             </Swiper>
             
             {/*banner*/}
             
+            <Image source={require('../../img/word_peace.jpg')} 
+              style={{width:ScreenWidth, height:140*screenScale}}/>
 
             <Text style={{paddingTop:100,color:'#ea453b',fontSize:17}}>
               {JSON.stringify(choicenessPageInfo.data.data.banner)}
