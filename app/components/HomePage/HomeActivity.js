@@ -39,7 +39,7 @@ export default class HomeActivity extends Component {
   render () {
     console.log("创建一次了，哈哈");
     return(
-        <View style={{backgroundColor:this.props.style.backgroundColor,height:'100%'}}>
+        <View>
           
           <Text style={{paddingTop:100}}>
             这是后面的页.

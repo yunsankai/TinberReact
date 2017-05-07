@@ -9,6 +9,8 @@ const initialState = {
   data: {
     data: {
       banner:[],
+      fast_entry:[],
+      program_recommend:[],
     }
 
   }

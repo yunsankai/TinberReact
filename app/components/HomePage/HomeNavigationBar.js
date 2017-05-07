@@ -53,13 +53,17 @@ export default class HomeNavigationBar extends Component{
     const titleViews = titlesArray.map(function (title, key) {
       // body...
       return(
-        <Text 
-          style={styles.titles,{color:(application.tab===key)?'#000000':'#ffffff', flex:1}}
-          key={key} 
-          onPress={()=>this._onPressText(key)}
-          >
-          {title}
-        </Text>
+        <TouchableHighlight style={{flex:1,height:'100%',justifyContent:'center',alignItems:'center'}}
+        key={key} 
+        onPress={()=>this._onPressText(key)}
+        >
+          <Text 
+            style={styles.titles,{color:(application.tab===key)?'#000000':'#ffffff'}}
+            >
+            {title}
+          </Text>
+          
+        </TouchableHighlight>
       )
     }.bind(this))
     return(
@@ -103,6 +107,7 @@ const styles = StyleSheet.create({
       color:'#ffffff',
       fontSize:17,
       flex:1,
+      height:20,
       alignSelf:'center',
       textAlign:'center',
     },

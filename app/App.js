@@ -27,10 +27,9 @@ import ChoicenessActions from './actions/ChoicenessActions'
 import HomeNavigationBar from './components/HomePage/HomeNavigationBar'
 import Swiper from 'react-native-swiper';
 import HomeActivity from './components/HomePage/HomeActivity'
-import ChoicenessActivity from './components/HomePage/ChoicenessActivity'
-import SearchActivity from './components/HomePage/SearchActivity'
+import ChoicenessActivity from './components/ChoicenessActivity/ChoicenessActivity'
+import SearchActivity from './components/SearchActivity/SearchActivity'
 import macro from './utils/macro'
-import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 
 class MainActivity extends Component{
@@ -82,28 +81,28 @@ class MainActivity extends Component{
   render(){
       return(
         <View>
-      {/*//底部播放条*/}
-          <HomeNavigationBar 
-          selectItemFunc={(selectItemIndex)=>this._onNavigationSelectItemChange(selectItemIndex)}
-          {...this.props}/>
-      {/* activities */}
-          <Swiper style={styles.wrapper}
-                  ref={(c)=>this.swiper = c} 
-                  showsButtons={false}
-                  onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
-                  loop={false}
-                  bounces={true}>
-            <ChoicenessActivity style={styles.slide1}  {...this.props}>
-            </ChoicenessActivity>
-            <HomeActivity style={styles.slide2}>
-            </HomeActivity>
-            <HomeActivity style={styles.slide3}>
-            </HomeActivity>
-            <HomeActivity style={styles.slide3}>
-            </HomeActivity>
-            <HomeActivity style={styles.slide3}>
-            </HomeActivity>
-          </Swiper>
+        {/*//底部播放条*/}
+            <HomeNavigationBar 
+            selectItemFunc={(selectItemIndex)=>this._onNavigationSelectItemChange(selectItemIndex)}
+            {...this.props}/>
+        {/* activities */}
+            <Swiper style={styles.wrapper}
+                    ref={(c)=>this.swiper = c} 
+                    showsButtons={false}
+                    onMomentumScrollEnd={this._onMomentumScrollEnd.bind(this)}
+                    loop={false}
+                    bounces={true}>
+              <ChoicenessActivity style={styles.slide1}  {...this.props}>
+              </ChoicenessActivity>
+              <HomeActivity style={styles.slide2}>
+              </HomeActivity>
+              <HomeActivity style={styles.slide3}>
+              </HomeActivity>
+              <HomeActivity style={styles.slide3}>
+              </HomeActivity>
+              <HomeActivity style={styles.slide3}>
+              </HomeActivity>
+            </Swiper>
         </View>
       )
     }
@@ -119,19 +118,20 @@ class App extends Component{
   renderScene (route, navigator) {
     if (route.component) {
       const Component = route.component;
+      const passProps = route.passProps?route.passProps:{};
       const statusBarH = StatusBar.currentHeight;
       if (Platform.OS === 'ios') {statusBarH=0};
       return  (
-        <View>
+        // <View>
           <Component navigator={navigator} route={route} 
-          style={{width:macro.getScreenWidth(),height:macro.getScreenHeight()}}{...this.props} />
-          <View style={{position:'absolute',top:macro.getScreenHeight()-50-statusBarH,
-            width:macro.getScreenWidth(),height:50,backgroundColor:'#ea453b',zIndex:9999}}>
-            <Text>
-              这个是底部播放条。
-            </Text>
-          </View>
-        </View>
+          style={{width:macro.getScreenWidth(),height:macro.getScreenHeight()}} {...passProps} {...this.props} />
+          // <View style={{position:'absolute',top:macro.getScreenHeight()-50-statusBarH,
+            // width:macro.getScreenWidth(),height:50,backgroundColor:'#ea453b',zIndex:9999}}>
+            // <Text>
+              // 这个是底部播放条。
+            // </Text>
+          // </View>
+        // </View>
       )
      }
   }
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#9DD6EB',
-
+    marginBottom:50,
   },
   slide2: {
     flex: 1,
