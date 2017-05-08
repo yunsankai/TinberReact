@@ -11,6 +11,7 @@ const address = {
 	programList:"program/getOverProgram",
   getAlbumCollectedState:"customer/getFavoriteProgram",
   updateAlbumCollectedState:"/album/collect-album",
+  getProgramInfo:"program/getProgramInfo",
 }
 
 export default class RequestAlbumInfo {
@@ -95,7 +96,20 @@ export default class RequestAlbumInfo {
   }
 
 
+  getProgramInfo(program_id, program_type, callBack){
+        console.log("getProgramInfo is " + baseUrl + address.getProgramInfo);
 
+    fetch(baseUrl+address.getProgramInfo, {
+        method: 'POST',
+        body: this.getRequestBodyWithParmas({'program_id':program_id,'program_type':program_type})
+     }).then((response) => response.json())
+      .then((responseJson) => {
+         callBack(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
 
 

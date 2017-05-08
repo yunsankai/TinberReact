@@ -14,6 +14,16 @@ export const CHOICENESS = {
   
 }
 
+export const ALBUMDETAIL = {
+  INFO: 'ALBUMDETAIL.INFO',
+  // INFO: 'ALBUMDETAIL.INFO',
+}
+
+export const TBGOLBALPLAYER = {
+  PLAY: 'TBGOLBALPLAYER.PLAY',
+  
+}
+
 export const GAME = {
   INFO: 'GAME.INFO',
   DETAIL: 'GAME.DETAIL',

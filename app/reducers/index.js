@@ -11,6 +11,7 @@ import playerList from './playerList'
 import playerLoaded from './playerLoaded'
 import team from './team'
 import choicenessPageInfo from './ChoicenessReducers'
+import playerInfo from './TBPlayerReducers'
 
 const reducers = combineReducers({
   unstart,
@@ -21,7 +22,8 @@ const reducers = combineReducers({
   playerList,
   playerLoaded,
   team,
-  choicenessPageInfo
+  choicenessPageInfo,
+  playerInfo
 })
 
 export default reducers

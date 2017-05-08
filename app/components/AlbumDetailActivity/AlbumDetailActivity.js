@@ -69,7 +69,14 @@ export default class AlbumDetailActivity extends Component {
         }
       }
     }.bind(this))
-
+    getAlbumInfoRequest.getProgramInfo(program.program_id, program.program_type, function (response) {
+      // body...
+      var returnCD = response.returnCD;
+      if (returnCD == "1") {
+        const {TBPlayerActions} = this.props;
+        TBPlayerActions.playWithUrl('play', response.data);
+      }
+    }.bind(this));
   }  
   _onPressBackButton() {
       // RNMethodReceiver.addEvent('popToNative', '4 Privet Drive, Surrey', null);

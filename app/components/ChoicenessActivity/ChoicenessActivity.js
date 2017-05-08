@@ -61,7 +61,7 @@ export default class ChoicenessActivity extends Component {
         name: 'AlbumDetailActivity',
         component: AlbumDetailActivity,
         passProps: {
-            program: item
+            program: item,
         }
     });
   }
