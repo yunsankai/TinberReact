@@ -80,6 +80,7 @@ export default class AlbumDetailActivity extends Component {
   }  
   _onPressBackButton() {
       // RNMethodReceiver.addEvent('popToNative', '4 Privet Drive, Surrey', null);
+      this.props.navigator.pop();
     }
     _onPressShareButton (){
       var {program} = this.props;
@@ -262,14 +263,14 @@ export default class AlbumDetailActivity extends Component {
             {/*去掉电池栏的父视图*/}
               <View style={styles.navigation}>
               {/*返回按钮*/}
-                <TouchableHighlight style={styles.navigation_back} onPress={this._onPressBackButton}>
-                  {<Image source={{uri: "IconBack"}} style={{width:44,height:44,resizeMode:'center'}}></Image> }
+                <TouchableHighlight style={styles.navigation_back} onPress={this._onPressBackButton.bind(this)}>
+                  {<Image source={require('../../img/iconback.png')} style={{width:44,height:44,resizeMode:'center'}}></Image> }
                 </TouchableHighlight>
                 <Text style={styles.navigation_title} numberOfLines={1}>
                   {program.program_name}
                 </Text>
                 <TouchableHighlight style={{position:'absolute', right:0, top:0, width:44, height:44}} onPress={this._onPressShareButton.bind(this)}>
-                  {<Image source={{uri: "ShareIcon"}} style={{width:44,height:44,resizeMode:'center'}}></Image> }
+                  {<Image source={require('../../img/shareicon.png')} style={{width:44,height:44,resizeMode:'center'}}></Image> }
                 </TouchableHighlight>
              </View>             
           </View>
@@ -304,7 +305,7 @@ export default class AlbumDetailActivity extends Component {
                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',height:40}}>
                       <Image
                       style={{width:23,height:23,resizeMode:'center'}}
-                      source={{uri:this.state.isCollected?'FavoriteHeard':'FavoriteHeard_Red'}}
+                      source={this.state.isCollected?require('../../img/favoriteheard.png'):require('../../img/favoriteheard_red.png')}
                       />
                       <Text style={{color:this.state.isCollected?'#666666':'#ea453b',fontSize:17}}>{this.state.isCollected?"已收藏":"收藏"}</Text>
                     </View>
@@ -313,7 +314,7 @@ export default class AlbumDetailActivity extends Component {
                     <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',height:40}}>
                         <Image
                           style={{width:23,height:23,resizeMode:'center'}}
-                          source={{uri:'batch_dl_red'}}
+                          source={require('../../img/batch_dl_red.png')}
                         />
                         <Text style={{color:'#ea453b',fontSize:17}}>批量下载</Text>
                      </View>
@@ -344,14 +345,14 @@ export default class AlbumDetailActivity extends Component {
           </Text>
           <TouchableHighlight style={{width:60,position:'absolute',right:75,top:0,height:40}} onPress={this._onPressSelectSet.bind(this)}>
             <View style={{flexDirection:'row'}}>
-              <Image source={{uri:'select_set'}} style={{width:14,height:16}}/>
+              <Image source={require('../../img/select_set.png')} style={{width:14,height:16}}/>
               <Text>选集</Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight style={{width:60,position:'absolute',right:15,top:0,height:40}} onPress={this._onPressListSortOrder}>
             <View style={{flexDirection:'row'}}>
               <Text>排序</Text>
-              <Image source={{uri:this.state.listSortOrder?'album_down_order':'album_up_order'}} style={{width:14,height:16}}/>
+              <Image source={this.state.listSortOrder?require('../../img/album_down_order.png'):require('../../img/album_up_order.png')} style={{width:14,height:16}}/>
             </View>
 
           </TouchableHighlight>
@@ -360,8 +361,8 @@ export default class AlbumDetailActivity extends Component {
        {/*节目列表，*/}
           <View style={{backgroundColor:'yellow',height:150}}>
           {/*选集*/}
-          
-              <ScrollView scrollsToTop={false} style={{flex: 1,position:'absolute',top:0,left:0,zIndex:9999,width:screenWidth,backgroundColor:'yellow',height:this.state.showSelectSetView?120:0}} contentContainerStyle={{flexDirection:'row',flexWrap:'wrap',alignItems:'flex-start'}}>
+          {this.state.albumModel.page && 
+            <ScrollView scrollsToTop={false} style={{flex: 1,position:'absolute',top:0,left:0,zIndex:9999,width:screenWidth,backgroundColor:'yellow',height:this.state.showSelectSetView?120:0}} contentContainerStyle={{flexDirection:'row',flexWrap:'wrap',alignItems:'flex-start'}}>
                { Object.keys(this.state.albumModel.page).map((pageValue,index) => <View style={{width:50,height:20,marginRight:5,marginLeft:5,marginTop:5,marginBottom:5}} key={index}>
                     <Text style={{borderWidth:1,borderColor:'#555555',borderRadius:5}} onPress={()=>this._onPressSetWithPage(this.state.albumModel.page[pageValue])}>
                       {pageValue}
@@ -369,6 +370,8 @@ export default class AlbumDetailActivity extends Component {
                   </View>
                 )}
               </ScrollView>
+            }
+              
             
 
             <View style={{backgroundColor:'powderblue',height:this.state.showProgramList?150:0}}>

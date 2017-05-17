@@ -15,11 +15,11 @@ const playWithUrl = (url,playerInfo) => {
           })
   }
 }
-const pausePlayer = () => {
+const pausePlayer = (playerInfo) => {
   return (dispatch, getStore) => {
     return dispatch({
             type: TBGOLBALPLAYER.PLAY,
-            data: {playerState:'pause'}
+            data: {playerState:'pause',playerInfo:playerInfo}
           })
   }
 }

@@ -10,8 +10,10 @@ import {
   InteractionManager,
   Dimensions,
   TouchableHighlight,
+  TouchableOpacity,
   StatusBar,
-  Platform
+  Platform,
+  Image,
 } from 'react-native' 
 
 import React, {
@@ -130,11 +132,12 @@ class App extends Component{
   render () {
     var statusBarH = StatusBar.currentHeight;
     if (Platform.OS === 'ios') {statusBarH=0};
-    const {playerInfo} = this.props;
+    const {playerInfo,TBPlayerActions} = this.props;
     //暂停、播放指令
     const playerState = playerInfo.data.playerState;
     //节目信息。
     const playerDetailInfo = playerInfo.data.playerInfo;
+    const paused = (playerState==='pause');
 
     return (
         <View style={{width:macro.getScreenWidth(),height:macro.getScreenHeight()}}>
@@ -153,15 +156,14 @@ class App extends Component{
           </Navigator>
           <View style={{position:'absolute',top:macro.getScreenHeight()-50-statusBarH,
             width:macro.getScreenWidth(),height:50,backgroundColor:'#ea453b',zIndex:9999}}>
-              {playerState === 'play' ? 
-                <Video source={{uri: playerDetailInfo.program_file}}   // Can be a URL or a local file.
+            <Video source={{uri: playerDetailInfo.program_file?playerDetailInfo.program_file:'http://www.baidu.com'}}   // Can be a URL or a local file.
                    ref={(ref) => {
                      this.player = ref
                    }}                                      // Store reference
                    rate={1.0}                              // 0 is paused, 1 is normal.
                    volume={1.0}                            // 0 is muted, 1 is normal.
                    muted={false}                           // Mutes the audio entirely.
-                   paused={false}                          // Pauses playback entirely.
+                   paused={paused}                          // Pauses playback entirely.
                    resizeMode="cover"                      // Fill the whole screen at aspect ratio.*
                    repeat={true}                           // Repeat forever.
                    playInBackground={false}                // Audio continues to play when app entering background.
@@ -176,12 +178,28 @@ class App extends Component{
                    // onBuffer={this.onBuffer}                // Callback when remote video is buffering
                    // onTimedMetadata={this.onTimedMetadata}  // Callback when the stream receive some metadata
                    style={styles.backgroundVideo} />
-                   : <View />
-              }
 
-              <Text>
-                这个是底部播放条。
-              </Text>
+              <View style={{flexDirection:'row',alignItems:'center',top:0,left:0,width:'100%',height:'100%'}}>
+                <Image source={playerDetailInfo.program_img?{uri:playerDetailInfo.program_img}:require('./img/word_peace.jpg')} style={{width:40,height:40}}/>
+                <View style={{width:200}}>
+                  <Text>
+                    {playerDetailInfo.program_name?playerDetailInfo.program_name:"没有专辑"}
+
+                  </Text>
+                  <Text>
+                    {playerDetailInfo.program_name?playerDetailInfo.program_description:"没有描述"}
+                  </Text>
+                </View>
+                <TouchableOpacity onPress={()=>((playerState==='play')?TBPlayerActions.pausePlayer(playerDetailInfo)
+                  :(playerDetailInfo.program_file?TBPlayerActions.playWithUrl(playerDetailInfo.program_file,playerDetailInfo):null))}>
+                  <Image
+                    style={{width:40,height:40,backgroundColor:'#333333'}}
+
+                    source={require('./img/bottombar_play.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+              
           </View>
         </View>
     )
@@ -219,8 +237,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    width:100,
-    height:50,
+    width:0,
+    height:0,
   },
   text: {
     color: '#fff',

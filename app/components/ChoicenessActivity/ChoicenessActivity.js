@@ -119,7 +119,7 @@ export default class ChoicenessActivity extends Component {
             refreshing={false}
             renderItem={(info) => (
               <TouchableOpacity onPress={() => this._onPressProgramItem(info.item)}
-              style={{justifyContent:'center',alignItems:'center',width:120,height:140}}
+              style={{justifyContent:'flex-start',alignItems:'center',width:120,height:140}}
               >
                 <Image source={{uri:info.item.program_img}} style={{width:110,height:110}}/>
                 <Text style={{color:'#666666'}} numberOfLines={2}>{info.item.program_describe}</Text>
